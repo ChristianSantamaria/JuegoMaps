@@ -3,10 +3,12 @@ package com.example.christian.juegomaps;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Looper;
+import android.provider.CalendarContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -126,8 +128,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             //calculamos la distancia a la marca
 
             String dista = String.valueOf((int) location.distanceTo(tesoroLoc));
+            int distancia = (int) location.distanceTo(tesoroLoc);
 
-            textViewDist.setText(dista + " metros");
+            if(distancia < 3){
+                textViewDist.setText("X");
+                textViewDist.setTextSize(50);
+                textViewDist.setTextColor(Color.RED);
+            }else{
+                textViewDist.setText(dista + " metros");
+                textViewDist.setTextSize(25);
+                textViewDist.setTextColor(Color.BLACK);
+            }
+
         }
 
         @Override
@@ -151,7 +163,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == codigo) {
-                reciboDato.setText("Has encontrado el tesoro");
+                if(data.toString().equals("Tesoro")){
+                    reciboDato.setText("Has encontrado el tesoro");
+                }else{
+                    reciboDato.setText("Eso no es un tesoro");
+                }
             }
         }
     }
