@@ -74,16 +74,11 @@ public class SimpleScannerActivity extends AppCompatActivity implements ZXingSca
 
         // If you would like to resume scanning, call this method below:
         mScannerView.resumeCameraPreview(this);
+
         // Instancio el Intent para mandar el resultado del QR
         Intent intento= new Intent();
+        intento.putExtra("retorno", rawResult.getText() );
 
-
-        if (rawResult.getText().equals("Tesoro")){
-            intento.putExtra("retorno", rawResult.getText() );
-        }
-        else{
-            intento.putExtra("retorno", "Error");
-        }
         setResult(RESULT_OK, intento);
         // cierro la cámara
         finish();

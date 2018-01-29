@@ -36,12 +36,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private final static int codigo = 0;
     public Intent intento;
     private LocationManager mLocMgr;
-    private TextView textViewGPS, textViewDist;
+    private TextView textViewGPS, textViewDist, recuentoTesoro;
     private LatLng tesoro;
     private Location tesoroLoc;
     private double lat = 42.236862, lng = -8.714710;
     private TextView reciboDato;
     private GoogleMap mMap;
+
+    private int puntos = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         textViewDist = (TextView) findViewById(R.id.dist);
 
         reciboDato = (TextView) findViewById(R.id.recibo);
+        recuentoTesoro = (TextView) findViewById(R.id.recuento);
+
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -164,7 +168,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (resultCode == RESULT_OK) {
             if (requestCode == codigo) {
                 if(data.toString().equals("Tesoro")){
-                    reciboDato.setText("Has encontrado el tesoro");
+                    reciboDato.setText("Has encontrado el primer tesoro");
+                    puntos ++;
+                    recuentoTesoro.setVisibility(View.VISIBLE);
+                    recuentoTesoro.setText(puntos + "");
+                    tesoroLoc.setLatitude(42.236995);
+                    tesoroLoc.setLongitude(-8.712451);
+
+                }else if(data.toString().equals("Tesoro2")){
+                    reciboDato.setText("Has encontrado el segundo tesoro");
+                    puntos ++;
+                    recuentoTesoro.setText(puntos + "");
+                    tesoroLoc.setLatitude(42.236113);
+                    tesoroLoc.setLongitude(-8.712311);
+
+                }else if(data.toString().equals("Tesoro3")){
+                    reciboDato.setText("Has encontrado todos los tesoros");
+                    puntos ++;
+                    recuentoTesoro.setText(puntos + "");
                 }else{
                     reciboDato.setText("Eso no es un tesoro");
                 }
