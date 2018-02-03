@@ -25,6 +25,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -124,7 +125,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng nuevaPosicion = new LatLng(location.getLatitude(), location.getLongitude());
             CameraPosition cameraPosition = CameraPosition.builder()
                     .target(nuevaPosicion)
-                    .zoom(15)
+                    .zoom(20)
                     .build();
 
             mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -138,11 +139,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 textViewDist.setText("X");
                 textViewDist.setTextSize(50);
                 textViewDist.setTextColor(Color.RED);
+
+            }else if(distancia < 20){
+                drawCircle(new LatLng(lat, lng));
+                textViewDist.setText(dista + " metros");
+                textViewDist.setTextSize(25);
+                textViewDist.setTextColor(Color.BLACK);
             }else{
                 textViewDist.setText(dista + " metros");
                 textViewDist.setTextSize(25);
                 textViewDist.setTextColor(Color.BLACK);
             }
+        }
+
+        private void drawCircle(LatLng point){
+
+            CircleOptions circleOptions = new CircleOptions();
+            circleOptions.center(point);
+            circleOptions.radius(40);
+            circleOptions.strokeColor(Color.BLACK);
+            circleOptions.strokeWidth(2);
+            mMap.addCircle(circleOptions);
 
         }
 
